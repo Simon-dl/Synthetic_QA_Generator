@@ -2,3 +2,4 @@
 /.vscode/
 /src/test.py
 /src/test-modelfile
+/utils/shell_scripts/*
