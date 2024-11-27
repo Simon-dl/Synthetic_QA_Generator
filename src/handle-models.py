@@ -73,4 +73,4 @@ response = ollama.chat(model="lazy-llama",
 print(response)
 """
 
-#ollama.create(model="testmodel", modelfile="gen-modelfile")
+
