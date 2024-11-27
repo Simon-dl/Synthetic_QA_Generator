@@ -37,18 +37,21 @@ def run_script(script_path):
     
 
 def generate_model(model_name, model_file):
+    """
+    This function generates a PowerShell script to create a model using Ollama.
+    """
     
-    script_contents = f"""wsl ollama create {model_name} --file {model_file}"""
-
+    script_contents = f"""ollama create {model_name} --file {model_file}"""
+    #script_contents = f"""ollama help run"""
     
 
 
-    script_name = f"utils/shell_scripts/{model_name}_script.ps1"
+    script_name = f"utils/shell_scripts/{model_name} _script.ps1"
     script_path = get_full_path(script_name)
 
     print(f"Full path: {script_path}")
     
-    create_script(script_path, script_contents)
+    #create_script(script_path, script_contents)
     run_script(script_path)
 
 generate_model("hoggwash-higgle", "test-modelfile")
