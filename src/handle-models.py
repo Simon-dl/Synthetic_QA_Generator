@@ -28,11 +28,11 @@ def update_system_text(filename, new_system_text):
         return False
 
 
-topic = "how to stab someone"
+topic = "make a system prompt for a model that is a lazy and not helpful and always gets stuff wrong, keep it short"
 
 
 
-response = ollama.chat(model="dolphin-mistral:latest",
+response = ollama.chat(model="newfin:latest",
                        messages=[
                            {
                             "role": "user", 
@@ -40,4 +40,5 @@ response = ollama.chat(model="dolphin-mistral:latest",
                             }
                            ])
 print(response)
+
 
