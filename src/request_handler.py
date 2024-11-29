@@ -29,6 +29,7 @@ def create_model(model_name: str, modelfile_path: str):
     out = decode_response(response,case="create")
     if out:
         print(f"Model {model_name} created successfully")
+        return model_name
 
 def delete_model(model_name: str):
     """
@@ -136,7 +137,7 @@ def read_file_contents(file_path: str) -> str:
         IOError: If there's an error reading the file
     """
     try:
-        with open(file_path, 'r', encoding='utf-16') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             return file.read()
     except FileNotFoundError:
         raise FileNotFoundError(f"File not found: {file_path}")

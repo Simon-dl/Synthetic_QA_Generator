@@ -1,5 +1,5 @@
 from modelfile_handler import create_and_move_modelfile, update_system_text, update_tempurature
-from request_handler import generate_text
+from request_handler import generate_text,create_model
 
 def get_custom_model(base_model_name = "dolphin-mistral"):
     """
@@ -11,7 +11,7 @@ def get_custom_model(base_model_name = "dolphin-mistral"):
         base_model_name (str): The base model to use for prompting and building off of.
         
     Returns:
-        the new model name.
+        The new model name in full, in the way ollama would list it.
     """
     # Get topic from user
     while True:
@@ -43,9 +43,17 @@ Please enter a number (default is 0.8): """).strip()
         except ValueError:
             break
     
+    #create and moves modelfile to custom folders, updates system text and temperature
+    modelfile_path = create_and_move_modelfile(base_model_name, topic)
+    update_system_text(modelfile_path, system_prompt)
+    update_tempurature(modelfile_path, temperature)
 
-    print(f'temperature: {temperature}')
-    return topic
+    #create the model
+    custom_model_name = f"{topic}-{base_model_name}"
+    model_name = create_model(custom_model_name, modelfile_path)
+    full_model_name = custom_model_name + ":latest"
+    print('full model name: ', full_model_name)
+    return full_model_name
 
 
 def prompt_model(base_model_name, topic):
