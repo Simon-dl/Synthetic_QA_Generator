@@ -1,9 +1,33 @@
 import ollama
 import pathlib
 import os
+from paths_handler import get_full_path
+from script_handler import create_script, run_script
 
 
 
+
+def create_and_move_modelfile(base_model_name, new_model_name):
+    make_modelfile_script = f"""
+    try {{
+        ollama show {base_model_name} --modelfile > {new_model_name}-modelfile
+        Write-Host \"Successfully created {new_model_name}-modelfile\"
+    }} catch {{
+        Write-Error \"Failed to create modelfile: $_\"
+        exit 1
+    }}
+    """
+    create_script(f"{new_model_name}-modelfile-script.ps1", make_modelfile_script)
+    script_path = get_full_path(f"{new_model_name}-modelfile-script.ps1")
+    run_script(script_path)
+
+
+
+    #new_modelfile_path = f"{new_model_name}-modelfile"
+    #print(new_modelfile_path)
+    #return new_modelfile_path
+
+create_and_move_modelfile("pls-work:latest", "mario")
 
 
 def update_system_text(filename, new_system_text):
@@ -77,8 +101,8 @@ def update_tempurature(filename, new_temp):
         print(f"Error updating file: {e}")
         return False
 
-update_system_text("src/test-modelfile", "You are super duper mario, answer all questions as super mario")
-update_tempurature("src/test-modelfile", "4.5")
+#update_system_text("src/test-modelfile", "You are super duper mario, answer all questions as super mario")
+#update_tempurature("src/test-modelfile", "4.5")
 
 #topic = """Speak as an AI talking about how lazy you are for 25 words, say you wont provide useful information and assistance and will get stuff wrong"""
 #out = generate_text("newfin:latest", topic)

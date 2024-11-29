@@ -72,8 +72,6 @@ def generate_text(model_name: str, prompt: str):
     return text
     
 
-    
-
 
 
 def decode_response(response, case: str):
