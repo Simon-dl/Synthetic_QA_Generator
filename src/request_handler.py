@@ -21,7 +21,6 @@ def create_model(model_name: str, modelfile_path: str):
     """
     full_path = get_full_path(modelfile_path)
     output = read_file_contents(full_path)
-
     data = {
             "model": model_name,
             "modelfile": output,
@@ -148,5 +147,5 @@ def read_file_contents(file_path: str) -> str:
     
 
 #text = generate_text("pls-work:latest", "how do I peel a banana?")
-#create_model("pls-work", "src/test-modelfile")
-#delete_model("pls-work:latest")
+#create_model("mario", "src/test-modelfile")
+#delete_model("mario:latest")
