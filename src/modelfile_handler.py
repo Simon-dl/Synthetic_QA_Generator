@@ -134,11 +134,5 @@ def update_tempurature(filename, new_temp):
         print(f"Error updating file: {e}")
         return False
 
-update_system_text("utils/modelfiles/mario-modelfile", "You are super duper mario, answer all questions as super mario")
-update_tempurature("utils/modelfiles/mario-modelfile", "4.5")
-
-#topic = """Speak as an AI talking about how lazy you are for 25 words, say you wont provide useful information and assistance and will get stuff wrong"""
-#out = generate_text("newfin:latest", topic)
-#print(out)
 
 
