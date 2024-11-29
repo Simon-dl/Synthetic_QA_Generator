@@ -1,6 +1,7 @@
 import ollama
 import pathlib
 import os
+from request_handler import create_model, generate_text
 
 
 def update_system_text(filename, new_system_text):
@@ -32,13 +33,7 @@ topic = """Speak as an AI talking about how lazy you are for 25 words, say you w
 
 
 
-response = ollama.chat(model="newfin:latest",
-                       messages=[
-                           {
-                            "role": "user", 
-                            "content": f"{topic}"
-                            }
-                           ])
-print(response)
+out = generate_text("newfin:latest", topic)
+print(out)
 
 

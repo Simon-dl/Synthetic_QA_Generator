@@ -67,10 +67,10 @@ def generate_text(model_name: str, prompt: str):
     data = {
             "model": model_name,
             "prompt": prompt,
-            "stream": True
         }
     response = requests.post(generate_url, json=data)
-    decode_response(response,case="generate")
+    text = decode_response(response,case="generate")
+    return text
     
 
     
@@ -82,7 +82,7 @@ def decode_response(response, case: str):
     Decodes the response from the server. Return different values depending on the case.
 
     Thanks https://github.com/pdichone/ollama-fundamentals/blob/main/start-1.py
-    for the generate case
+    for the generate case starter code
     """
     if case == "delete":
         if response.status_code == 200:
@@ -108,16 +108,17 @@ def decode_response(response, case: str):
                 print(f"Model {model_name} unloaded successfully")
 
         elif case == "generate":
-            print("Generated Text:", end=" ", flush=True)
-            # Iterate over the streaming response
+            # Initialize empty string for collecting response
+            
+            full_text = ""
             for line in response.iter_lines():
                 if line:
-                    # Decode the line and parse the JSON
-                    decoded_line = line.decode("utf-8")
-                    result = json.loads(decoded_line)
-                    # Get the text from the response
-                    generated_text = result.get("response", "")
-                    print(generated_text, end="", flush=True)
+                    json_response = json.loads(line.decode('utf-8'))
+                    individual_text = json_response["response"]
+                    full_text += individual_text
+                    
+            
+            return full_text
     else:
         print(f"Error: {response.status_code}")
         print(response.text)
@@ -146,6 +147,6 @@ def read_file_contents(file_path: str) -> str:
         raise IOError(f"Error reading file {file_path}: {str(e)}")
     
 
-generate_text("pls-work:latest", "how do I peel a banana?")
+#text = generate_text("pls-work:latest", "how do I peel a banana?")
 #create_model("pls-work", "src/test-modelfile")
 #delete_model("pls-work:latest")
