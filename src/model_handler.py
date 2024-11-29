@@ -28,7 +28,7 @@ def update_system_text(filename, new_system_text):
         return False
 
 
-topic = "make a system prompt for a model that is a lazy and not helpful and always gets stuff wrong, keep it short"
+topic = """Speak as an AI talking about how lazy you are for 25 words, say you wont provide useful information and assistance"""
 
 
 
