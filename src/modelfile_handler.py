@@ -10,7 +10,7 @@ from script_handler import create_script, run_script
 def create_and_move_modelfile(base_model_name, new_model_name):
     make_modelfile_script = f"""
     try {{
-        ollama show {base_model_name} --modelfile > {new_model_name}-modelfile
+        ollama show {base_model_name} --modelfile | Out-File -FilePath {new_model_name}-modelfile -Encoding utf8 
         Write-Host \"Successfully created {new_model_name}-modelfile\"
     }} catch {{
         Write-Error \"Failed to create modelfile: $_\"
@@ -21,19 +21,47 @@ def create_and_move_modelfile(base_model_name, new_model_name):
     script_path = get_full_path(f"{new_model_name}-modelfile-script.ps1")
     run_script(script_path)
 
+    # Get paths
+    new_modelfile_path = f"{new_model_name}-modelfile"
+    new_script_path = f"{new_model_name}-modelfile-script.ps1"
+    full_modelfile_path = get_full_path(new_modelfile_path)
+    full_script_path = get_full_path(new_script_path)
 
+    modelfile_destination_path = get_full_path("utils/modelfiles")
+    script_destination_path = get_full_path("utils/scripts")
 
-    #new_modelfile_path = f"{new_model_name}-modelfile"
-    #print(new_modelfile_path)
-    #return new_modelfile_path
+    # Create destination directorys if it doesn't exist
+    os.makedirs(modelfile_destination_path, exist_ok=True)
+    os.makedirs(script_destination_path, exist_ok=True)
 
-create_and_move_modelfile("pls-work:latest", "mario")
+    # Move the modelfile and script creating it their respective folders
+    try:
+        destination_file = os.path.join(modelfile_destination_path, new_modelfile_path)
+        os.replace(full_modelfile_path, destination_file)
+        print(f"Successfully moved modelfile to {destination_file}")
+    except Exception as e:
+        print(f"Error moving modelfile: {e}")
+        return None
+    
+    try:
+        script_destination_file = os.path.join(script_destination_path, new_script_path)
+        os.replace(full_script_path, script_destination_file)
+        print(f"Successfully moved script to {script_destination_file}")
+    except Exception as e:
+        print(f"Error moving modelfile: {e}")
+        return None
+    
+    return destination_file
 
 
 def update_system_text(filename, new_system_text):
+    """
+    Updates the system text in the modelfile
+    """
+    full_filename = get_full_path(filename)
     try:
         # Read all lines from file
-        with open(filename, 'r', encoding='utf-16') as file:
+        with open(full_filename, 'r', encoding='utf-8') as file:
             lines = file.readlines()
         
         # Find SYSTEM line
@@ -55,12 +83,12 @@ def update_system_text(filename, new_system_text):
             lines.insert(insert_position, system_line)
         
         # Write back to file
-        with open(filename, 'w', encoding='utf-16') as file:
+        with open(full_filename, 'w', encoding='utf-8') as file:
             file.writelines(lines)
             
         return True
     except FileNotFoundError:
-        print(f"Error: File {filename} not found")
+        print(f"Error: File {full_filename} not found")
         return False
     except Exception as e:
         print(f"Error updating file: {e}")
@@ -68,9 +96,14 @@ def update_system_text(filename, new_system_text):
     
 
 def update_tempurature(filename, new_temp):
+    """
+    Updates the temperature in the modelfile
+    """
+    full_filename = get_full_path(filename)
+    print(full_filename)
     try:
         # Read all lines from file
-        with open(filename, 'r', encoding='utf-16') as file:
+        with open(full_filename, 'r', encoding='utf-8') as file:
             lines = file.readlines()
         
         # Find SYSTEM line
@@ -90,19 +123,19 @@ def update_tempurature(filename, new_temp):
             lines.insert(insert_position, temp_line)
         
         # Write back to file
-        with open(filename, 'w', encoding='utf-16') as file:
+        with open(full_filename, 'w', encoding='utf-8') as file:
             file.writelines(lines)
             
         return True
     except FileNotFoundError:
-        print(f"Error: File {filename} not found")
+        print(f"Error: File {full_filename} not found")
         return False
     except Exception as e:
         print(f"Error updating file: {e}")
         return False
 
-#update_system_text("src/test-modelfile", "You are super duper mario, answer all questions as super mario")
-#update_tempurature("src/test-modelfile", "4.5")
+update_system_text("utils/modelfiles/mario-modelfile", "You are super duper mario, answer all questions as super mario")
+update_tempurature("utils/modelfiles/mario-modelfile", "4.5")
 
 #topic = """Speak as an AI talking about how lazy you are for 25 words, say you wont provide useful information and assistance and will get stuff wrong"""
 #out = generate_text("newfin:latest", topic)
