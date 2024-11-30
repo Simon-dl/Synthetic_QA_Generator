@@ -19,7 +19,7 @@ def create_model(model_name: str, modelfile_path: str):
 
     Will show up as model name in ollama list.
     """
-    full_path = modelfile_path
+    full_path = get_full_path(modelfile_path)
     output = read_file_contents(full_path)
     data = {
             "model": model_name,

@@ -67,19 +67,20 @@ def prompt_model(base_model_name, topic):
 
     return text
 
-#get_custom_model()
+get_custom_model()
 
 #modelfile will only work if the system has qoute around text 
 #with with no qoute marks in text or around the system prompt,
 #so if you want to use a modelfile, you must remove the qoutes from the system prompt
+
 #model_name = 'work-pls'
 #modelfile_path = 'utils/modelfiles/mario-modelfile'
 #full_modelfile_path = get_full_path(modelfile_path)
 
 #print('full modelfile path: ', full_modelfile_path)
 
-def create_model_from_modelfile(model_name, modelfile_path):
-    create_model(model_name, modelfile_path)
+#def create_model_from_modelfile(model_name, modelfile_path):
+#    create_model(model_name, modelfile_path)
 
 #create_model_from_modelfile(model_name, full_modelfile_path)
 
