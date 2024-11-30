@@ -53,14 +53,15 @@ def create_and_move_modelfile(base_model_name, new_model_name):
     
     return destination_file
 
-#modelfile will only work if the system has qoute around text 
-#with  no qoute marks in text or around the system prompt,
-#so if you want to use a modelfile, you must remove the qoutes from the system prompt
-#the code below works with dolphin-mistral models but I did not test it with other models.
+"""modelfile will only work if the system has qoute around text with no qoute marks in text or around the system prompt,
+so if you want to use a modelfile, you must remove the qoutes from the system prompt
+the code below works with dolphin-mistral models, it did not work with llama3.2. 
+so you will have to update the code to work with other models.
+"""
 
 def update_system_text(filename, new_system_text):
     """
-    Updates the system text in the modelfile
+    Updates the system text in the modelfile, works with dolphin-mistral models
     """
     full_filename = get_full_path(filename)
     try:
@@ -74,7 +75,7 @@ def update_system_text(filename, new_system_text):
             if line.strip().startswith('SYSTEM "'):
                 
                 # Replace the line without the extra quotes
-                lines[i] = f'SYSTEM "{new_system_text}"\n'
+                lines[i] = f'SYSTEM """{new_system_text}"""\n'
                 
                 # Remove the following line if it only contains a quotation mark
                 if i + 1 < len(lines) and lines[i + 1].strip() == '"':
@@ -85,7 +86,7 @@ def update_system_text(filename, new_system_text):
         
         # If SYSTEM not found, add it at end
         if not system_found:
-            system_line = f'SYSTEM "{new_system_text}"\n'
+            system_line = f'SYSTEM """{new_system_text}"""\n'
             insert_position = len(lines)
             lines.insert(insert_position, system_line)
         

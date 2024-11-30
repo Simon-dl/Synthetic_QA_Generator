@@ -145,6 +145,3 @@ def read_file_contents(file_path: str) -> str:
         raise IOError(f"Error reading file {file_path}: {str(e)}")
     
 
-#text = generate_text("pls-work:latest", "how do I peel a banana?")
-#create_model("mario", "src/test-modelfile")
-#delete_model("mario:latest")

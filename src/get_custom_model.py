@@ -24,10 +24,12 @@ def get_custom_model(base_model_name = "dolphin-mistral"):
     system_prompt = ""
     while True:
         text = prompt_model(base_model_name, topic)
-        satis = input( "\n \n \nIs this satifactory as a system prompt? selecting no will reprompt the model. \ny for yes, n for no: " ).strip()
+        satis = input( "\n \n \nIs this satifactory as a system prompt? not accepting will reprompt the model. \ny for yes, c to change topic, anything else for no: " ).strip()
         if satis == 'y':  # Check if yes
             system_prompt = text
             break
+        elif satis == 'c':
+            topic = input(" \n \nEnter a new topic for your custom model (e.g., 'Mario', 'Shakespeare', etc.): ").strip()
 
     temperature = .8
     while True:
@@ -44,14 +46,15 @@ Please enter a number (default is 0.8): """).strip()
         except ValueError:
             break
     
+    hyphen_topic = topic.replace(" ", "-")
     #create and moves modelfile to custom folders, updates system text and temperature
-    modelfile_path = create_and_move_modelfile(base_model_name, topic)
+    modelfile_path = create_and_move_modelfile(base_model_name, hyphen_topic)
     update_system_text(modelfile_path, system_prompt)
     update_tempurature(modelfile_path, temperature)
 
     print('modelfile path: ', modelfile_path)
     #create the model
-    custom_model_name = f"{topic}-{base_model_name}"
+    custom_model_name = f"{hyphen_topic}-{base_model_name}"
     model_name = create_model(custom_model_name, modelfile_path)
     full_model_name = custom_model_name + ":latest"
     print('full model name: ', full_model_name)
@@ -67,22 +70,9 @@ def prompt_model(base_model_name, topic):
 
     return text
 
+
+
+
 get_custom_model()
 
-#modelfile will only work if the system has qoute around text 
-#with with no qoute marks in text or around the system prompt,
-#so if you want to use a modelfile, you must remove the qoutes from the system prompt
-
-#model_name = 'work-pls'
-#modelfile_path = 'utils/modelfiles/mario-modelfile'
-#full_modelfile_path = get_full_path(modelfile_path)
-
-#print('full modelfile path: ', full_modelfile_path)
-
-#def create_model_from_modelfile(model_name, modelfile_path):
-#    create_model(model_name, modelfile_path)
-
-#create_model_from_modelfile(model_name, full_modelfile_path)
-
-#create_model('ma', full_modelfile_path)
 
