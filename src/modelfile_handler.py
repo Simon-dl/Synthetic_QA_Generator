@@ -68,13 +68,13 @@ def update_system_text(filename, new_system_text):
         system_found = False
         for i, line in enumerate(lines):
             if line.strip().startswith("SYSTEM"):
-                lines[i] = f'SYSTEM "{new_system_text}"\n'
+                lines[i] = f'SYSTEM {new_system_text}\n'
                 system_found = True
                 break
         
         # If SYSTEM not found, add it at end
         if not system_found:
-            system_line = f'SYSTEM "{new_system_text}"\n'
+            system_line = f'SYSTEM {new_system_text}\n'
             
             # Find position after third FROM
             insert_position = len(lines)  # Default to end of file

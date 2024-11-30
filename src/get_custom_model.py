@@ -1,5 +1,6 @@
 from modelfile_handler import create_and_move_modelfile, update_system_text, update_tempurature
 from request_handler import generate_text,create_model
+from paths_handler import get_full_path
 
 def get_custom_model(base_model_name = "dolphin-mistral"):
     """
@@ -48,6 +49,7 @@ Please enter a number (default is 0.8): """).strip()
     update_system_text(modelfile_path, system_prompt)
     update_tempurature(modelfile_path, temperature)
 
+    print('modelfile path: ', modelfile_path)
     #create the model
     custom_model_name = f"{topic}-{base_model_name}"
     model_name = create_model(custom_model_name, modelfile_path)
@@ -65,6 +67,21 @@ def prompt_model(base_model_name, topic):
 
     return text
 
-get_custom_model()
+#get_custom_model()
 
+#modelfile will only work if the system has qoute around text 
+#with with no qoute marks in text or around the system prompt,
+#so if you want to use a modelfile, you must remove the qoutes from the system prompt
+#model_name = 'work-pls'
+#modelfile_path = 'utils/modelfiles/mario-modelfile'
+#full_modelfile_path = get_full_path(modelfile_path)
+
+#print('full modelfile path: ', full_modelfile_path)
+
+def create_model_from_modelfile(model_name, modelfile_path):
+    create_model(model_name, modelfile_path)
+
+#create_model_from_modelfile(model_name, full_modelfile_path)
+
+#create_model('ma', full_modelfile_path)
 
