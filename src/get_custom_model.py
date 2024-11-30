@@ -1,6 +1,5 @@
 from modelfile_handler import create_and_move_modelfile, update_system_text, update_tempurature
 from request_handler import generate_text,create_model
-from paths_handler import get_full_path
 
 def get_custom_model(base_model_name = "dolphin-mistral"):
     """
@@ -71,8 +70,5 @@ def prompt_model(base_model_name, topic):
     return text
 
 
-
-
-get_custom_model()
 
 

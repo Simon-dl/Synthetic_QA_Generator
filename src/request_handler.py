@@ -34,6 +34,8 @@ def create_model(model_name: str, modelfile_path: str):
 def delete_model(model_name: str):
     """
     Deletes a model using the provided model name.
+
+    Does not work for some reason.
     """
     data = {
         "model": model_name
@@ -52,7 +54,7 @@ def unload_model(model_name: str):
     Unloads a model using the provided model name.
     """
     data = {
-        "model": "llama3.2",
+        "model": f"{model_name}",
         "messages": [],
         "keep_alive": 0
         }
@@ -63,6 +65,8 @@ def unload_model(model_name: str):
 def generate_text(model_name: str, prompt: str):
     """
     Generates text using the provided model name and prompt.
+
+    returns the generated text as a string.
     """
     data = {
             "model": model_name,
