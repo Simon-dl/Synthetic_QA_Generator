@@ -36,11 +36,15 @@ topic_list = ["food", "cars", "computers", "books", "movies", "music", "art", "s
 random_topic = random.choice(topic_list)
 
 print(f'Generating {pair_amount} pairs of questions and answers')
-print(random_topic)
-prompt_text = generate_text('phi3:mini', f'ask a question about {random_topic} in 20 words or less')
-print(prompt_text)
-response_text = generate_text(custom_model, prompt_text)
-print(response_text)
+pairs = []
+for i in range(pair_amount):
+    random_topic = random.choice(topic_list)
+    print(f'Generating pair {i+1}, topic: {random_topic}')
+    prompt_text = generate_text('phi3:mini', f'ask a question about {random_topic} in 20 words or less')
+    response_text = generate_text(custom_model, prompt_text)
+    pairs.append({'question': prompt_text, 'answer': response_text})
+
+print(pairs)
 
 
 #TODO: Add a loop to generate the number of pairs of questions and answers specified by the user
