@@ -1,6 +1,7 @@
 from get_custom_model import get_custom_model
-from request_handler import generate_text
+from request_handler import generate_text, show_model
 import random
+import time
 
 while True:
         model_input = input(" \n \nEnter the name of the model you want to use to answer questions or type 'setup' to set up a custom model and use that: ").strip()
@@ -9,7 +10,10 @@ while True:
             break
         elif model_input:
             custom_model = model_input
-            break
+            if show_model(custom_model):
+                break
+            else:
+                print(f"Model {custom_model} not found, please try again")
         
 pair_amount = 2
 while True:
@@ -38,17 +42,19 @@ random_topic = random.choice(topic_list)
 print(f'Generating {pair_amount} pairs of questions and answers')
 pairs = []
 for i in range(pair_amount):
+    
+    start = time.time()
     random_topic = random.choice(topic_list)
     print(f'Generating pair {i+1}, topic: {random_topic}')
     prompt_text = generate_text('phi3:mini', f'ask a question about {random_topic} in 20 words or less')
     response_text = generate_text(custom_model, prompt_text)
     pairs.append({'question': prompt_text, 'answer': response_text})
+    end = time.time()
+    print(f'Pair {i+1} took {end - start} seconds to generate')
 
 print(pairs)
 
-
-#TODO: Add a loop to generate the number of pairs of questions and answers specified by the user
-#TODO: add a request_handler function to make sure user input is valid
+#TODO: round up the time it takes to generate each pair, make a stats file to keep track of the time it takes to generate each pair
 #TODO: add a model to format the questions and answers as json
 #TODO: add a function to save the questions and answers json to a file
 #TODO: add a function to upload the file to huggingface?

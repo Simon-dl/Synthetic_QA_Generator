@@ -8,6 +8,7 @@ import json
 create_url = "http://localhost:11434/api/create"
 generate_url = "http://localhost:11434/api/generate"
 delete_url = "http://localhost:11434/api/delete"
+show_url = "http://localhost:11434/api/show"
 
 def create_model(model_name: str, modelfile_path: str):
     """
@@ -47,6 +48,14 @@ def delete_model(model_name: str):
         print(f"Model {model_name} deleted successfully")
     else:
         print(f"Error: model {model_name} not found, check ollama list")
+
+def show_model(model_name: str):
+    data = {
+        "model": model_name
+    }
+    response = requests.post(show_url, json=data)
+    out = decode_response(response,case="show")
+    return out
         
 
 def unload_model(model_name: str):
@@ -92,6 +101,7 @@ def decode_response(response, case: str):
         else:
             print(f"Error: {response.status_code}")
             return False
+
         
     elif response.status_code == 200:
         if case == "create":
@@ -102,6 +112,15 @@ def decode_response(response, case: str):
                     status = json_response["status"]
                     if status == "success":
                         return True
+                    
+        elif case == "show":
+            for line in response.iter_lines():
+                if line:
+                    json_response = json.loads(line.decode('utf-8'))
+                    if "model_info" in json_response:
+                        return True
+                    else:
+                        return False
         
         elif case == "unload":
             total_response = response.json()
@@ -122,8 +141,9 @@ def decode_response(response, case: str):
             
             return full_text
     else:
-        print(f"Error: {response.status_code}")
-        print(response.text)
+        print(f"Error: {response.status_code} {response.text}")
+
+        return False
 
 
 def read_file_contents(file_path: str) -> str:
