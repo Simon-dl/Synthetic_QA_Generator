@@ -66,7 +66,7 @@ print(f'Minimum time to generate a pair: {min_time} seconds')
 
 
 
-#TODO: round up the time it takes to generate each pair, make a stats file to keep track of the time it takes to generate each pair
+
 #TODO: add a model to format the questions and answers as json
 #TODO: add a function to save the questions and answers json to a file
 #TODO: add a function to upload the file to huggingface? https://huggingface.co/docs/datasets/en/upload_dataset
