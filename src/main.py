@@ -40,6 +40,7 @@ topic_list = ["food", "cars", "computers", "books", "movies", "music", "art", "s
 random_topic = random.choice(topic_list)
 
 print(f'Generating {pair_amount} pairs of questions and answers')
+times = []
 pairs = []
 for i in range(pair_amount):
     
@@ -50,14 +51,25 @@ for i in range(pair_amount):
     response_text = generate_text(custom_model, prompt_text)
     pairs.append({'question': prompt_text, 'answer': response_text})
     end = time.time()
-    print(f'Pair {i+1} took {end - start} seconds to generate')
+    pair_time = round(end - start, 2)
+    times.append(pair_time)
+    print(f'Pair {i+1} took {pair_time} seconds to generate')
 
-print(pairs)
+total_time = sum(times)
+min_time = min(times)
+max_time = max(times)
+
+print(f'\nTotal time to generate {pair_amount} pairs: {round(total_time, 2)} seconds')
+print(f'Average time to generate each pair: {round(total_time / pair_amount, 2)} seconds')
+print(f'Maximum time to generate a pair: {max_time} seconds')
+print(f'Minimum time to generate a pair: {min_time} seconds')
+
+
 
 #TODO: round up the time it takes to generate each pair, make a stats file to keep track of the time it takes to generate each pair
 #TODO: add a model to format the questions and answers as json
 #TODO: add a function to save the questions and answers json to a file
-#TODO: add a function to upload the file to huggingface?
+#TODO: add a function to upload the file to huggingface? https://huggingface.co/docs/datasets/en/upload_dataset
 #TODO: create a better custom dolphin model to generate system prompts, push to ollama for downloading
 #TODO: add setup file to set up custom models 
 #TODO: add setup instructions to README.md
