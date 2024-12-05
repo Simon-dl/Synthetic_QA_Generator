@@ -1,7 +1,21 @@
 import csv
 import os
+#from datasets import load_dataset
 
 fake_data = {'conversations' : [[{'question': "burh", 'answer': "whydoe"}]]}
+
+fake_pairs = [{'question': "burh", 'answer': "whydoe"}]
+
+path = "utils/csv_files/qa_dataset.csv"
+
+def pairs_to_csv(pairs, filename='dataset'):
+    """
+    takes the pairs and writes them to a csv file
+    """
+    file_path = f'utils/csv_files/{filename}.csv'
+    data_dict = {'conversations': [pairs]}
+    print(file_path, data_dict)
+    write_to_csv(data_dict, file_path)
 
 def write_to_csv(data_dict, filename='dataset.csv'):
     """
@@ -30,4 +44,5 @@ def write_to_csv(data_dict, filename='dataset.csv'):
             writer.writerow([item])
 
 # Example usage
-write_to_csv(fake_data, 'data/qa_dataset.csv')
+#write_to_csv(fake_data, path)
+pairs_to_csv(fake_pairs, 'test')

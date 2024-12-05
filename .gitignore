@@ -4,4 +4,5 @@
 /src/test2.py
 /src/test-modelfile
 /utils/scripts/*
-utils/modelfiles/*
+utils/model_files/*
+utils/csv_files/*

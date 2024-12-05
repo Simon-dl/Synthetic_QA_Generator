@@ -1,5 +1,6 @@
 from get_custom_model import get_custom_model
 from request_handler import generate_text, show_model
+from dataset_handler import pairs_to_csv
 import random
 import time
 
@@ -49,12 +50,14 @@ for i in range(pair_amount):
     print(f'Generating pair {i+1}, topic: {random_topic}')
     prompt_text = generate_text('phi3:mini', f'ask a question about {random_topic} in 20 words or less')
     response_text = generate_text(custom_model, prompt_text)
-    pairs.append({'question': prompt_text, 'answer': response_text})
+    pairs.append([{'question': prompt_text, 'answer': response_text}])
     end = time.time()
     pair_time = round(end - start, 2)
     times.append(pair_time)
     print(f'Pair {i+1} took {pair_time} seconds to generate')
 
+model_name = custom_model.replace(':', '_')
+pairs_to_csv(pairs, f'{model_name}_dataset')
 total_time = sum(times)
 min_time = min(times)
 max_time = max(times)
