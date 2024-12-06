@@ -2,9 +2,8 @@ import csv
 import os
 from datasets import load_dataset
 
-fake_data = {'conversations' : [[{'question': "burh", 'answer': "whydoe"}]]}
-
-fake_pairs = [[{'question': "burh", 'answer': "whydoe"}],[{'question': "burh", 'answer': "whydeer"}],[{'question': "burh", 'answer': "whybeer"}]]
+#fake_data = {'conversations' : [[{'question': "burh", 'answer': "whydoe"}]]}
+#fake_pairs = [[{'question': "burh", 'answer': "whydoe"}],[{'question': "burh", 'answer': "whydeer"}],[{'question': "burh", 'answer': "whybeer"}]]
 
 path = "utils/csv_files/qa_dataset.csv"
 
@@ -64,6 +63,10 @@ def write_to_csv(data_dict, filename='dataset.csv'):
         for item in data_dict[field_name]:
             writer.writerow([item])
 
-# Example usage
-#write_to_csv(fake_data, path)
-#pairs_to_csv(fake_pairs, 'test')
+def push_to_hf(filename):
+    """
+    pushes the dataset to the huggingface hub
+    look for example here: https://huggingface.co/docs/datasets/en/share
+    """
+    dataset = load_dataset('csv', data_files=filename)
+    dataset.push_to_hub('')

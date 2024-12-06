@@ -70,8 +70,8 @@ print(f'Minimum time to generate a pair: {min_time} seconds')
 
 
 
-#TODO: add a model to format the questions and answers as json
-#TODO: add a function to save the questions and answers json to a file (done)
+#TODO: add a model to format the questions and answers (done)
+#TODO: add a function to save the questions and answers to a csv file, make sure it writes lines correctly
 #TODO: add a function to upload the file to huggingface? https://huggingface.co/docs/datasets/en/upload_dataset
 #TODO: create a better custom dolphin model to generate system prompts, push to ollama for downloading
 #TODO: add setup file to set up custom models 
