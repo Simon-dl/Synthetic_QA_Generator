@@ -1,10 +1,10 @@
 import csv
 import os
-#from datasets import load_dataset
+from datasets import load_dataset
 
 fake_data = {'conversations' : [[{'question': "burh", 'answer': "whydoe"}]]}
 
-fake_pairs = [[{'question': "burh", 'answer': "whydoe"}]]
+fake_pairs = [[{'question': "burh", 'answer': "whydoe"}],[{'question': "burh", 'answer': "whydeer"}],[{'question': "burh", 'answer': "whybeer"}]]
 
 path = "utils/csv_files/qa_dataset.csv"
 
@@ -27,16 +27,16 @@ def format_pairs(pairs):
     https://huggingface.co/datasets/mlabonne/FineTome-100k?row=79
     """
     formatted_pairs = []
+    print(len(pairs))
+
     for i in range(len(pairs)):
-        question = pairs[0][i]['question']
-        answer = pairs[0][i]['answer']
+        question = pairs[i][0]['question']
+        answer = pairs[i][0]['answer']
         human = {"from": "bot1", "value": f"{question}" }
         bot = { "from": "bot2", "value": f"{answer}"}
         formatted_pairs.append([human, bot])
     return formatted_pairs
 
-test_return = format_pairs(fake_pairs)
-print(test_return)
 
 def write_to_csv(data_dict, filename='dataset.csv'):
     """
