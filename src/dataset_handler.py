@@ -4,18 +4,39 @@ import os
 
 fake_data = {'conversations' : [[{'question': "burh", 'answer': "whydoe"}]]}
 
-fake_pairs = [{'question': "burh", 'answer': "whydoe"}]
+fake_pairs = [[{'question': "burh", 'answer': "whydoe"}]]
 
 path = "utils/csv_files/qa_dataset.csv"
 
-def pairs_to_csv(pairs, filename='dataset'):
+def pairs_to_csv(pairs, format, filename='dataset'):
     """
     takes the pairs and writes them to a csv file
+    format is a boolean that determines if the pairs should be formatted 
     """
     file_path = f'utils/csv_files/{filename}.csv'
+    if format:
+        pairs = format_pairs(pairs)
     data_dict = {'conversations': [pairs]}
     print(file_path, data_dict)
     write_to_csv(data_dict, file_path)
+
+
+def format_pairs(pairs):
+    """
+    formats the pairs to the tome dataset format 
+    https://huggingface.co/datasets/mlabonne/FineTome-100k?row=79
+    """
+    formatted_pairs = []
+    for i in range(len(pairs)):
+        question = pairs[0][i]['question']
+        answer = pairs[0][i]['answer']
+        human = {"from": "bot1", "value": f"{question}" }
+        bot = { "from": "bot2", "value": f"{answer}"}
+        formatted_pairs.append([human, bot])
+    return formatted_pairs
+
+test_return = format_pairs(fake_pairs)
+print(test_return)
 
 def write_to_csv(data_dict, filename='dataset.csv'):
     """
@@ -45,4 +66,4 @@ def write_to_csv(data_dict, filename='dataset.csv'):
 
 # Example usage
 #write_to_csv(fake_data, path)
-pairs_to_csv(fake_pairs, 'test')
+#pairs_to_csv(fake_pairs, 'test')

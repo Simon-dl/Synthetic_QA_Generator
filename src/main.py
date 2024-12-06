@@ -57,7 +57,7 @@ for i in range(pair_amount):
     print(f'Pair {i+1} took {pair_time} seconds to generate')
 
 model_name = custom_model.replace(':', '_')
-pairs_to_csv(pairs, f'{model_name}_dataset')
+pairs_to_csv(pairs, True, f'{model_name}_dataset')
 total_time = sum(times)
 min_time = min(times)
 max_time = max(times)
@@ -71,7 +71,7 @@ print(f'Minimum time to generate a pair: {min_time} seconds')
 
 
 #TODO: add a model to format the questions and answers as json
-#TODO: add a function to save the questions and answers json to a file
+#TODO: add a function to save the questions and answers json to a file (done)
 #TODO: add a function to upload the file to huggingface? https://huggingface.co/docs/datasets/en/upload_dataset
 #TODO: create a better custom dolphin model to generate system prompts, push to ollama for downloading
 #TODO: add setup file to set up custom models 
