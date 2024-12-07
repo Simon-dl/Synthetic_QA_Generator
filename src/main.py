@@ -3,6 +3,9 @@ from request_handler import generate_text, show_model
 from dataset_handler import pairs_to_csv
 import random
 import time
+import sys
+
+question_model = 'phi3:mini'
 
 while True:
         model_input = input(" \n \nEnter the name of the model you want to use to answer questions or type 'setup' to set up a custom model and use that: ").strip()
@@ -43,14 +46,26 @@ random_topic = random.choice(topic_list)
 print(f'Generating {pair_amount} pairs of questions and answers')
 times = []
 pairs = []
+first_pair = True
 for i in range(pair_amount):
     
     start = time.time()
     random_topic = random.choice(topic_list)
     print(f'Generating pair {i+1}, topic: {random_topic}')
-    prompt_text = generate_text('phi3:mini', f'ask a question about {random_topic} in 20 words or less')
+    prompt_text = generate_text(f'{question_model}', f'ask a question about {random_topic} in 20 words or less')
     response_text = generate_text(custom_model, prompt_text)
     pairs.append([{'question': prompt_text, 'answer': response_text}])
+    if first_pair:
+        first_pair = False
+        print(f'First pair: {pairs[0]}')
+        while True:
+            okay_pair = input("""\nDid this pair generally look okay to you? (y/n): if not, type 'n' and program will exit so you start again with everything fresh """).strip()
+            if okay_pair == 'y':
+                break
+            elif okay_pair == 'n':
+                sys.exit("\n\nExiting program")
+            else:
+                print("Please enter 'y' or 'n'")
     end = time.time()
     pair_time = round(end - start, 2)
     times.append(pair_time)
@@ -68,7 +83,7 @@ print(f'Minimum time to generate a pair: {min_time} seconds')
 
 
 while True:
-        format_input = input("""\nWould you like to format the questions and answers? see github for more info (y/n): """).strip()
+        format_input = input("""\nWould you like to format the questions and answers? see README.md for more info (y/n): """).strip()
         if format_input == 'y':
             pairs_to_csv(pairs, True, f'{model_name}_dataset')
             break
@@ -78,13 +93,12 @@ while True:
         else:
             print("Please enter 'y' or 'n'")
 
-
+sys.exit("\n\nExiting program")
 
 #TODO: add a model to format the questions and answers (done)
 #TODO: add a function to save the questions and answers to a csv file, make sure it writes lines correctly (done)
-#TODO: add a function to upload the file to huggingface? https://huggingface.co/docs/datasets/en/upload_dataset
 #TODO: create a better custom dolphin model to generate system prompts, push to ollama for downloading
 #TODO: add setup file to set up custom models 
-#TODO: add setup instructions to README.md
+#TODO: add setup instructions to README.md (done)
 #TODO: clean up code, add comments, and make it more readable, then publish to github
-#TODO: create a .bat file to run the program?
+
