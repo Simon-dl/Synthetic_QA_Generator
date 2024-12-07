@@ -3,7 +3,7 @@ import os
 from datasets import load_dataset
 
 #fake_data = {'conversations' : [[{'question': "burh", 'answer': "whydoe"}]]}
-#fake_pairs = [[{'question': "burh", 'answer': "whydoe"}],[{'question': "burh", 'answer': "whydeer"}],[{'question': "burh", 'answer': "whybeer"}]]
+fake_pairs = [[{'question': "burh", 'answer': "whydoe"}],[{'question': "burh", 'answer': "whydeer"}],[{'question': "burh", 'answer': "whybeer"}]]
 
 path = "utils/csv_files/qa_dataset.csv"
 
@@ -39,8 +39,7 @@ def format_pairs(pairs):
 
 def write_to_csv(data_dict, filename='dataset.csv'):
     """
-    Write dictionary data to a CSV file where the key becomes the field name
-    and the list becomes the data values.
+    Write dictionary data to a CSV file where each item in the list is on its own line.
     
     Args:
         data_dict (dict): Dictionary with string key and list value
@@ -59,8 +58,8 @@ def write_to_csv(data_dict, filename='dataset.csv'):
         # Write header
         writer.writerow([field_name])
         
-        # Write data rows - each item in the list becomes a row
-        for item in data_dict[field_name]:
+        # Write each item in the list as a separate row
+        for item in data_dict[field_name][0]:  # Note the [0] to access the inner list
             writer.writerow([item])
 
 def push_to_hf(filename):
@@ -70,3 +69,8 @@ def push_to_hf(filename):
     """
     dataset = load_dataset('csv', data_files=filename)
     dataset.push_to_hub('')
+
+
+formatted_pairs = format_pairs(fake_pairs)
+data_dict = {'conversations': [formatted_pairs]}
+write_to_csv(data_dict, 'utils/csv_files/test.csv')
