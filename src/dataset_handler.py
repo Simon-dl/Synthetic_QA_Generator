@@ -16,8 +16,7 @@ def pairs_to_csv(pairs, format, filename='dataset'):
     if format:
         pairs = format_pairs(pairs)
     data_dict = {'conversations': [pairs]}
-    print(file_path, data_dict)
-    write_to_csv(data_dict, file_path)
+    write_to_csv(data_dict, format, file_path)
 
 
 def format_pairs(pairs):
@@ -37,12 +36,12 @@ def format_pairs(pairs):
     return formatted_pairs
 
 
-def write_to_csv(data_dict, filename='dataset.csv'):
+def write_to_csv(data_dict, formatted, filename='dataset.csv'):
     """
-    Write dictionary data to a CSV file where each item in the list is on its own line.
+    Write dictionary data to a CSV file where each conversation pair is on its own line.
     
     Args:
-        data_dict (dict): Dictionary with string key and list value
+        data_dict (dict): Dictionary with 'conversations' key containing list of pairs
         filename (str): Name of the output CSV file
     """
     # Ensure the output directory exists
@@ -58,9 +57,17 @@ def write_to_csv(data_dict, filename='dataset.csv'):
         # Write header
         writer.writerow([field_name])
         
-        # Write each item in the list as a separate row
-        for item in data_dict[field_name][0]:  # Note the [0] to access the inner list
-            writer.writerow([item])
+        if formatted:
+            for item in data_dict[field_name][0]:  # Note the [0] to access the inner list
+                writer.writerow([item])
+        else:
+            # Write each conversation pair as a separate row
+            for pair in data_dict[field_name][0]:  # Note: [0] because fake_data has nested list
+                writer.writerow([pair])
+
+
+
+            
 
 def push_to_hf(filename):
     """
@@ -71,6 +78,4 @@ def push_to_hf(filename):
     dataset.push_to_hub('')
 
 
-formatted_pairs = format_pairs(fake_pairs)
-data_dict = {'conversations': [formatted_pairs]}
-write_to_csv(data_dict, 'utils/csv_files/test.csv')
+
