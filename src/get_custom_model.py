@@ -63,7 +63,7 @@ Please enter a number (default is 0.8): """).strip()
 def prompt_model(base_model_name, topic):
     print(f" \ntopic: {topic} \n\nprompting model {base_model_name} with topic {topic} to generate a system prompt")
 
-    text = generate_text(f"{base_model_name}", f"Write a system text for a {topic} character,mention how the chacracter should be a {topic} character when responding to a user, dont mention system text")
+    text = generate_text(f"{base_model_name}", f"Write a system text for a {topic} character,mention how the chacracter should be a {topic} character when responding to a user, dont mention system text, write as a commanding rude director")
 
     print("\n model response: \n \n -------------------------------------------------------------------------- \n", text, "\n --------------------------------------------------------------------------")
 
