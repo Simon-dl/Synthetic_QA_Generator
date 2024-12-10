@@ -9,6 +9,20 @@ create_url = "http://localhost:11434/api/create"
 generate_url = "http://localhost:11434/api/generate"
 delete_url = "http://localhost:11434/api/delete"
 show_url = "http://localhost:11434/api/show"
+pull_url = "http://localhost:11434/api/pull"
+
+def pull_model(model_name: str):
+    data = {
+        "model": model_name
+    }
+    print("\nPulling model...")
+    response = requests.post(pull_url, json=data)
+    out = decode_response(response,case="pull")
+    if out:
+        print(f"Model {model_name} pulled successfully, see ollama list")
+    else:
+        print(f"Error: model {model_name} not found, check ollama website for proper model name")
+
 
 def create_model(model_name: str, modelfile_path: str):
     """
@@ -32,22 +46,7 @@ def create_model(model_name: str, modelfile_path: str):
         print(f"Model {model_name} created successfully")
         return model_name
 
-def delete_model(model_name: str):
-    """
-    Deletes a model using the provided model name.
 
-    Does not work for some reason.
-    """
-    data = {
-        "model": model_name
-    }
-    print(data)
-    response = requests.post(delete_url, json=data)
-    out = decode_response(response,case="delete")
-    if out:
-        print(f"Model {model_name} deleted successfully")
-    else:
-        print(f"Error: model {model_name} not found, check ollama list")
 
 def show_model(model_name: str):
     data = {
@@ -95,13 +94,13 @@ def decode_response(response, case: str):
     Thanks https://github.com/pdichone/ollama-fundamentals/blob/main/start-1.py
     for the generate case starter code
     """
-    if case == "delete":
+    if case == "pull":
         if response.status_code == 200:
             return True
         else:
             print(f"Error: {response.status_code}")
             return False
-
+        
         
     elif response.status_code == 200:
         if case == "create":
