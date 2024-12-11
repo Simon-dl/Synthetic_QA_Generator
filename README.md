@@ -29,6 +29,8 @@ To run the program, run main.py after installing the requirements.txt file.
 Can control what topics the models can talk about by changing the topic list in main.py.
 Default question model is 'phi3:mini', but can be changed by changing the question_model variable in main.py.
 
+After creating a custom model, you can find it by typing 'ollama list' in the terminal.
+
 When asked if you want to format the questions and answers, it will format them to the FineTome-100k format.
 https://huggingface.co/datasets/mlabonne/FineTome-100k
 

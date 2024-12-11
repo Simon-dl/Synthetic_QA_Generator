@@ -6,3 +6,4 @@
 /utils/scripts/*
 utils/model_files/*
 utils/csv_files/*
+/src/push.py
