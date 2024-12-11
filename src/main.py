@@ -98,7 +98,7 @@ sys.exit("\n\nExiting program")
 #TODO: add a model to format the questions and answers (done)
 #TODO: add a function to save the questions and answers to a csv file, make sure it writes lines correctly (done)
 #TODO: create a better custom dolphin model to generate system prompts (done),
-#TODO: push model to ollama for downloading (12/9/2024)
+#TODO: push model to ollama for downloading (12/9/2024) (done)
 #TODO: add setup file to pull models from ollama when running the program, make sure to check if the model is already downloaded
 #TODO: add setup instructions to README.md (done)
 #TODO: clean up code, add comments, and make it more readable, then publish to github
