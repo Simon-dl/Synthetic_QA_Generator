@@ -15,7 +15,6 @@ def pull_model(model_name: str):
     data = {
         "model": model_name
     }
-    print("\nPulling model...")
     response = requests.post(pull_url, json=data)
     out = decode_response(response,case="pull")
     if out:
@@ -96,6 +95,10 @@ def decode_response(response, case: str):
     """
     if case == "pull":
         if response.status_code == 200:
+            for line in response.iter_lines():
+                if line:
+                    json_response = json.loads(line.decode('utf-8'))
+                    print(json_response)
             return True
         else:
             print(f"Error: {response.status_code}")

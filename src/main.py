@@ -1,9 +1,12 @@
 from get_custom_model import get_custom_model
 from request_handler import generate_text, show_model
 from dataset_handler import pairs_to_csv
+from setup import setup_models
 import random
 import time
 import sys
+
+setup_models()
 
 question_model = 'phi3:mini'
 
