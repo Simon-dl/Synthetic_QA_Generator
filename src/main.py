@@ -103,4 +103,3 @@ sys.exit("\n\nExiting program")
 #TODO: add setup file to pull models from ollama when running the program, make sure to check if the model is already downloaded (done)
 #TODO: add setup instructions to README.md (done)
 #TODO: clean up code, add comments, and make it more readable, then publish to github
-

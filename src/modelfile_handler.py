@@ -73,13 +73,16 @@ def update_system_text(filename, new_system_text):
         system_found = False
         for i, line in enumerate(lines):
             if line.strip().startswith('SYSTEM "'):
-                
                 # Replace the line without the extra quotes
                 lines[i] = f'SYSTEM """{new_system_text}"""\n'
                 
-                # Remove the following line if it only contains a quotation mark
-                if i + 1 < len(lines) and lines[i + 1].strip() == '"':
-                    lines.pop(i + 1)
+                # Remove all lines until we find a line with just a quote
+                j = i + 1
+                while j < len(lines) and lines[j].strip() != '"':
+                    lines.pop(j)
+                # Remove the line with just the quote
+                if j < len(lines) and lines[j].strip() == '"':
+                    lines.pop(j)
                 
                 system_found = True
                 break
@@ -102,6 +105,7 @@ def update_system_text(filename, new_system_text):
         print(f"Error updating file: {e}")
         return False
     
+
 
 def update_tempurature(filename, new_temp):
     """
