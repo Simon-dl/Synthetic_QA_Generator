@@ -27,7 +27,7 @@ def create_and_move_modelfile(base_model_name, new_model_name):
     full_modelfile_path = get_full_path(new_modelfile_path)
     full_script_path = get_full_path(new_script_path)
 
-    modelfile_destination_path = get_full_path("utils/modelfiles")
+    modelfile_destination_path = get_full_path("utils/model_files")
     script_destination_path = get_full_path("utils/scripts")
 
     # Create destination directorys if it doesn't exist

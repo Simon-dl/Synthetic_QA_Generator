@@ -39,8 +39,6 @@ Please enter a number (default is 2): """).strip()
                 break  
         except ValueError:
             break
-#custom_model = get_custom_model()
-#custom_model = 'lazy-llama:latest'
 
 
 topic_list = ["food", "cars", "computers", "books", "movies", "music", "art", "science", "history", "geography", "math", "physics", "chemistry", "biology", "philosophy", "psychology", "sociology", "economics", "politics", "law", "sports", "entertainment", "travel", "fashion", "beauty", "health", "fitness", "technology", "science fiction", "fantasy", "horror", "mystery", "thriller", "romance", "comedy", "animation", "video games", "board games", "card games", "sports", "hobbies", "gardening", "cooking", "baking", "diy", "crafts", "artisanal", "handmade", "vintage", "antiques", "collectibles", "vintage"]
@@ -102,7 +100,7 @@ sys.exit("\n\nExiting program")
 #TODO: add a function to save the questions and answers to a csv file, make sure it writes lines correctly (done)
 #TODO: create a better custom dolphin model to generate system prompts (done),
 #TODO: push model to ollama for downloading (12/9/2024) (done)
-#TODO: add setup file to pull models from ollama when running the program, make sure to check if the model is already downloaded
+#TODO: add setup file to pull models from ollama when running the program, make sure to check if the model is already downloaded (done)
 #TODO: add setup instructions to README.md (done)
 #TODO: clean up code, add comments, and make it more readable, then publish to github
 

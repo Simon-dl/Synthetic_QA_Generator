@@ -12,6 +12,9 @@ show_url = "http://localhost:11434/api/show"
 pull_url = "http://localhost:11434/api/pull"
 
 def pull_model(model_name: str):
+    """
+    Pulls a model from ollama using the provided model name.
+    """
     data = {
         "model": model_name
     }
