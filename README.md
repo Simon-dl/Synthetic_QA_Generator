@@ -1,4 +1,4 @@
-# Synthetic Question-Answer dataset generator
+# Synthetic Question-Answer Dataset Generator
 
 How this works:
 
