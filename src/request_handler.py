@@ -2,9 +2,6 @@ from paths_handler import get_full_path
 import requests
 import json
 
-
-
-
 create_url = "http://localhost:11434/api/create"
 generate_url = "http://localhost:11434/api/generate"
 delete_url = "http://localhost:11434/api/delete"
