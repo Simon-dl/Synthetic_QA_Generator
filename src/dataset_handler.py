@@ -1,6 +1,5 @@
 import csv
 import os
-from datasets import load_dataset
 
 
 def pairs_to_csv(pairs, format, filename='dataset'):

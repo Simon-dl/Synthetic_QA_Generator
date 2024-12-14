@@ -1,5 +1,3 @@
-import ollama
-import pathlib
 import os
 from paths_handler import get_full_path
 from script_handler import create_script, run_script
