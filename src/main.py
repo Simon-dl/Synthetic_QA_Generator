@@ -72,7 +72,12 @@ for i in range(pair_amount):
     times.append(pair_time)
     print(f'Pair {i+1} took {pair_time} seconds to generate')
 
-model_name = custom_model.replace(':', '_')
+model_name = custom_model.replace(':', '-')
+model_name = custom_model.replace('/', '-')
+
+pos = model_name.find('-')
+short_name = model_name[:pos]
+
 total_time = sum(times)
 min_time = min(times)
 max_time = max(times)
@@ -86,10 +91,12 @@ print(f'Minimum time to generate a pair: {min_time} seconds')
 while True:
         format_input = input("""\nWould you like to format the questions and answers? see README.md for more info (y/n): """).strip()
         if format_input == 'y':
-            pairs_to_csv(pairs, True, f'{model_name}_dataset')
+            print(f'Formatting questions and answers for {short_name} dataset')
+            pairs_to_csv(pairs, True, f'{short_name}_dataset')
             break
         elif format_input == 'n':
-            pairs_to_csv(pairs, False, f'{model_name}_dataset')
+            print(f'Not formatting questions and answers for {short_name} dataset')
+            pairs_to_csv(pairs, False, f'{short_name}_dataset')
             break
         else:
             print("Please enter 'y' or 'n'")
@@ -103,3 +110,6 @@ sys.exit("\n\nExiting program")
 #TODO: add setup file to pull models from ollama when running the program, make sure to check if the model is already downloaded (done)
 #TODO: add setup instructions to README.md (done)
 #TODO: clean up code, add comments, and make it more readable, then publish to github
+
+#TODO: Fix to_csv function to create dataset apparently
+# sonic-the-hedgehog-Simon-DL/Director-fin:latest
